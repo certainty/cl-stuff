@@ -1,4 +1,6 @@
-(asdf:defsystem  "cl-algorithms"
+(in-package :asdf-user)
+
+(defsystem "cl-algorithms"
   :description "Just a playground for algorithms and datastrucuturesin lisp"
   :author "David Krentzlin <david.krentzlin@gmail.com>"
   :source-control (:git "https://github.com/certainty/cl-stuff.git")
@@ -8,7 +10,7 @@
   :depends-on (:cl-murmurhash)
   :in-order-to ((test-op (test-op :cl-algorithms/tests))))
 
-(asdf:defsystem  "cl-algorithms/tests"
+(defsystem  "cl-algorithms/tests"
   :description "Tests for cl-algorithms"
   :author "David Krentzlin <david.krentzlin@gmail.com>"
   :depends-on (:parachute)
