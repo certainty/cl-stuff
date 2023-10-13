@@ -25,22 +25,24 @@
 (defgeneric insert (bloomfilter element)
   (:documentation "Insert an element into a bloom filter."))
 
+(defmacro with-hash-bits ((bloomfilter element state-var bit-var) &body body)
+  `(with-slots (,state-var hash-functions size) ,bloomfilter
+     (dolist (hash-function hash-functions)
+       (let ((,bit-var (mod (funcall hash-function ,element) size)))
+         ,@body))))
+
 (defmethod insert ((bloomfilter <bloomfilter>) element)
-  (with-slots (state hash-functions size) bloomfilter
-    (dolist (hash-function hash-functions)
-      (let ((bit (mod (funcall hash-function element) size)))
-        (setf state (set-bit state bit))))))
+  (with-hash-bits (bloomfilter element state bit)
+    (setf state (set-bit state bit))))
+
+(defmethod member-p ((bloomfilter <bloomfilter>) element)
+  (with-hash-bits (bloomfilter element state bit)
+    (unless (test-bit state bit)
+      (return-from member-p nil))
+    t))
 
 (defgeneric member-p (bloomfilter element)
   (:documentation "Check if an element exists in a bloom filter. It might be a false positive. But when it returns nil, then element definitely doesn't exist in the bloom filter."))
-
-(defmethod member-p ((bloomfilter <bloomfilter>) element)
-  (with-slots (state hash-functions size) bloomfilter
-    (dolist (hash-function hash-functions)
-      (let ((bit (mod (funcall hash-function element) size)))
-        (unless (test-bit state bit)
-          (return-from member-p nil))))
-    t))
 
 (defun set-bit (state bit)
   "Set the bit in the state to 1"
