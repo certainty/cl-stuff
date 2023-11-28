@@ -1,27 +1,26 @@
 (in-package :cl-algorithms.search)
 
-(defun binary-search (vec get-key n)
+(defun binary-search (ary val &key (lessp #'<) (key #'identity) (test #'eql))
   "Perform a binary search on the sorted vector provided.
-<vec> denotes the vector of elements to search in.
-<get-key> denotes the key selector function which is used to get the key from the elemtns in the vector
-<n> is the key you're looking for.
+   The function returns nil if no such element can be found in the vector.
 
-The function returns nil if no such element can be found in the vector.
-
-Examples:
-
+   Examples:
    CL-USER> (defvar o (vector '(1 . foo) '(2 . bar) '(3 . baz) '(4 . barbaz) '(5 . froomle)))
-   CL-USER> (binary-search o #'car 3)
+   CL-USER> (binary-search o 3 :key #'car)
    (3 . BAZ)
-
-"
-  (let ((len (length vec)))
-    (if (zerop len)
-        nil
-        (let* ((pivot (floor (/ (- len 1) 2)))
-               (elem (aref vec pivot))
-               (key (funcall get-key elem)))
-          (cond
-            ((< n key) (binary-search (subseq vec 0 pivot) get-key n))
-            ((> n key) (binary-search (subseq vec (incf pivot)) get-key n))
-            (t elem))))))
+  "
+  (labels ((smaller (a b) (funcall lessp (funcall key a) b))
+           (same (a b) (funcall test (funcall key a) b)))
+    (when (plusp (length ary))
+      (let ((beg 0)
+            (end (1- (length ary))))
+        (do ()
+            ((= beg end))
+          (let ((mid (+ beg (floor (- end beg) 2))))
+            (if (smaller (aref ary mid) val)
+                ;; search to the right
+                (setf beg (1+ mid))
+                ;; search to the left
+                (setf end mid))))
+        (when (same (aref ary beg) val)
+          (aref ary beg))))))
