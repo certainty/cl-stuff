@@ -6,8 +6,11 @@
   :source-control (:git "https://github.com/certainty/cl-stuff.git")
   :serial t
   :pathname "src"
-  :components ((:file "bloomfilter"))
-  :depends-on (:cl-murmurhash)
+  :components
+  ((:file "bloomfilter")
+   (:file "search")
+   (:file "sort"))
+  :depends-on (:cl-murmurhash :serapeum :alexandria)
   :in-order-to ((test-op (test-op :cl-algorithms/tests))))
 
 (defsystem  "cl-algorithms/tests"
@@ -17,6 +20,7 @@
   :serial t
   :pathname "tests"
   :components ((:file "package")
-               (:file "bloomfilter-test"))
+               (:file "bloomfilter-test")
+               )
   :perform (test-op (o c)
                     (uiop:symbol-call :parachute :test :cl-algorithms/tests)))
