@@ -1,8 +1,4 @@
-(defpackage :cl-bloomfilter
-  (:use #:cl #:cl-murmurhash)
-  (:export :<bloomfilter> :insert :member-p :saturated-p))
-
-(in-package :cl-bloomfilter)
+(in-package :cl-algorithms.bloomfilter)
 
 (defun hash-murmur (o)
   (let ((*hash-size* 128))

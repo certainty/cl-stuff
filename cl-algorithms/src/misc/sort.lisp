@@ -1,9 +1,3 @@
-(in-package :cl-user)
-
-(defpackage :cl-algorithms.sort
-  (:use :cl)
-  (:local-nicknames (:a :alexandria) (:s :serapeum))
-  (:import-from :serapeum :->))
 (in-package :cl-algorithms.sort)
 
 (deftype predicate () '(function (t t) (or null t)))
@@ -21,7 +15,7 @@
     (flet ((cmp (a b) (funcall test (funcall key a) (funcall key b))))
       (loop for swapped = nil
             do (loop for i from 1 below (length ary)
-                     when (cmp (aref ary (1- i)) (aref ary i))
+                     when (cmp (aref ary i) (aref ary (1- i)))
                        do (progn
                             (rotatef (aref ary (1- i)) (aref ary i))
                             (setf swapped t)))

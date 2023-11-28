@@ -1,8 +1,4 @@
-(in-package :cl-user)
-(defpackage :cl-algorithms.search
-  (:use #:cl)
-  (:local-nicknames (:a :alexandria) (:s :serapeum))
-  (:import-from :serapeum :->))
+(in-package :cl-algorithms.search)
 
 (defun binary-search (vec get-key n)
   "Perform a binary search on the sorted vector provided.
