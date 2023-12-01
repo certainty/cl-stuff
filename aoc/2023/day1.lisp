@@ -2,13 +2,13 @@
 
 (defun part-one ()
   (loop for line in (file-lines #p"input/day1.input")
-        summing (line->number line)))
+        summing (callibration-values line)))
 
 (defun part-two ()
   (loop for line in (file-lines #p"input/day1.input")
-        summing (line->number (convert-digit-names line))))
+        summing (callibration-values (convert-digit-names line))))
 
-(defun line->number (line)
+(defun callibration-values (line)
   (let ((all-digits (loop for c across line when (digit-char-p c) collect it)))
     (parse-integer (format nil "~A~A" (first all-digits) (car (last all-digits))))))
 
