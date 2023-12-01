@@ -6,7 +6,7 @@
 
 (defun part-two ()
   (loop for line in (file-lines #p"input/day1.input")
-        summing (line->number (replace-digit-names line))))
+        summing (line->number (convert-digit-names line))))
 
 (defun line->number (line)
   (let ((all-digits (loop for c across line when (digit-char-p c) collect it)))
