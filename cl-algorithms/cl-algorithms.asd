@@ -6,9 +6,15 @@
   :source-control (:git "https://github.com/certainty/cl-stuff.git")
   :serial t
   :pathname "src"
-  :depends-on (:cl-murmurhash :serapeum :alexandria)
+  :depends-on (:cl-murmurhash :serapeum :alexandria :str :lisp-unit2)
   :components
-  ((:module "misc"
+  ((:module "aoc2023"
+    :components
+    ((:file "packages")
+     (:file "utils")
+     (:file "day1")))
+
+   (:module "misc"
     :components
     ((:file "packages")
      (:file "bloomfilter")

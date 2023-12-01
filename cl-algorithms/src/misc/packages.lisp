@@ -12,7 +12,8 @@
   (:local-nicknames (:a :alexandria) (:s :serapeum))
   (:import-from :serapeum :->)
   (:export
-   #:bubble-sort))
+   #:bubble-sort
+   #:insertion-sort))
 
 (defpackage :cl-algorithms.bloomfilter
   (:use #:cl #:cl-murmurhash)
