@@ -1,6 +1,6 @@
 (in-package :asdf-user)
 
-(defsystem "advent-of-code"
+(defsystem "aoc"
   :description "Me doing advent of code"
   :author "David Krentzlin <david.krentzlin@gmail.com>"
   :source-control (:git "https://github.com/certainty/cl-stuff.git")

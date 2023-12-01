@@ -1,19 +1,18 @@
 (in-package :aoc.2023)
 
 (defun part-one ()
-  (loop for line in (file-lines #p"src/aoc2023/input/day1.input")
+  (loop for line in (file-lines #p"input/day1.input")
         summing (line->number line)))
 
 (defun part-two ()
-  (loop for line in (file-lines #p"src/aoc2023/input/day1.input")
+  (loop for line in (file-lines #p"input/day1.input")
         summing (line->number (replace-digit-names line))))
-
 
 (defun line->number (line)
   (let ((all-digits (loop for c across line when (digit-char-p c) collect it)))
     (parse-integer (format nil "~A~A" (first all-digits) (car (last all-digits))))))
 
-(defun replace-digit-names (line)
+(defun convert-digit-names (line)
   "Takes a string as input and returns a string where very occurance of digit
    names have been replaced by the digit itself. It matches the longest names
    first.
